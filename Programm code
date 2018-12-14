@@ -154,8 +154,8 @@ class MainWindow(QMainWindow):
         self._timer.timeout.connect(self.update_timer)
         self._timer.start(1000)  # 1 second timer
 
-        self.mines.setText("%03d" % self.n_mines)
-        self.clock.setText("000")
+        self.mines.setText("Bombs:%03d" % self.n_mines)
+        self.clock.setText("Time:000")
 
         self.button = QPushButton()
         self.button.setFixedSize(QSize(32, 32))
@@ -202,7 +202,6 @@ class MainWindow(QMainWindow):
             for y in range(0, self.b_size):
                 w = Pos(x, y)
                 self.grid.addWidget(w, y, x)
-                # Connect signal to handle expansion.
                 w.clicked.connect(self.trigger_start)
                 w.expandable.connect(self.expand_reveal)
                 w.ohno.connect(self.game_over)
@@ -286,7 +285,7 @@ class MainWindow(QMainWindow):
     def update_timer(self):
         if self.status == STATUS_PLAYING:
             n_secs = int(time.time()) - self._timer_start_nsecs
-            self.clock.setText("%03d" % n_secs)
+            self.clock.setText("Time:%03d" % n_secs)
 
     def game_over(self):
         self.reveal_map()
